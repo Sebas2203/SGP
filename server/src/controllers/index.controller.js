@@ -1,4 +1,4 @@
-import { pool } from "../db/db.js";
+import { pool } from "../database/db.js";
 
 //para ver si funciona la base de datos
 export const pingPong = async (req, res) => {
