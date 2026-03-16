@@ -74,6 +74,17 @@ npm run dev
 
 ---
 
+### Nomenclatura de ramas
+
+| Tipo                | Formato           | Ejemplo          |
+| ------------------- | ----------------- | ---------------- |
+| Nueva funcionalidad | `feature/nombre`  | `feature/login`  |
+| Corrección de bug   | `fix/nombre`      | `fix/login`      |
+| Corrección urgente  | `hotfix/nombre`   | `hotfix/login`   |
+| Mejora de código    | `refactor/nombre` | `refactor/login` |
+
+---
+
 ### Flujo de trabajo
 
 **1. Siempre parte desde `developer` para crear tu rama:**
@@ -81,7 +92,18 @@ npm run dev
 ```bash
 git checkout developer
 git pull origin developer
-git checkout -b tu-nombre-apellido
+
+# Para una nueva funcionalidad
+git checkout -b feature/nombre
+
+# Para corregir un bug
+git checkout -b fix/nombre
+
+# Para una corrección urgente
+git checkout -b hotfix/nombre
+
+# Para una mejora de código
+git checkout -b refactor/nombre
 ```
 
 **2. Trabaja en tu rama y sube los cambios:**
@@ -89,12 +111,12 @@ git checkout -b tu-nombre-apellido
 ```bash
 git add .
 git commit -m "tipo: descripción de los cambios"
-git push origin tu-nombre-apellido
+git push origin feature/nombre
 ```
 
 **3. Cuando termines, crea un Pull Request:**
 
-- De `tu-nombre-apellido` → `developer`
+- De `feature/nombre` → `developer`
 - Nunca hacer PR directo a `main`
 - Espera revisión antes de hacer merge
 
@@ -105,7 +127,8 @@ git push origin tu-nombre-apellido
 ### ⚠️ Reglas importantes
 
 - ❌ Nunca hacer push directo a `main` o `developer`
-- ✅ Siempre trabajar en tu propia rama
+- ✅ Siempre partir desde `developer` para crear tu rama
+- ✅ Usar la nomenclatura correcta en el nombre de la rama
 - ✅ Mantener tu rama actualizada con `developer`
 
 ---
