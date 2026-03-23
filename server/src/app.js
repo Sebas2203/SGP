@@ -4,7 +4,7 @@ import authRoutes from "./routes/auth.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 
 //ruta de prueba
-import protegidaRoutes from "./routes/protegida.routes.js";
+//import protegidaRoutes from "./routes/protegida.routes.js";
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use("/api", indexRoutes);
 app.use("/api", authRoutes);
 
 //esta ruta la use de pruebas para los tokens
-app.use("/api", protegidaRoutes);
+//app.use("/api", protegidaRoutes);
 
 
 //route not found
