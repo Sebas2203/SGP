@@ -1,2 +1,5 @@
 /node_modules
 .env
+
+src/routes/auth.routes.js
+src/controllers/protegida.controller.js
