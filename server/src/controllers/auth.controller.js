@@ -1,39 +1,13 @@
 import { pool } from "../database/db.js";
+import { generarToken } from "../jwt.js"; 
 
-
-
-export const register = (req, res) => {
-  const { email, password, username } = req.body;
-  res.send("registrando");
-};
-
-
-//export const login = (req, res) => {
-//  res.send("login");
-//};
-
-
-//prueba de un login 
-
-//export const login = async (req, res) => {
-//  try {
-//    const result = await pool.query("SELECT (TC_ROL_NOMBRE) FROM TBSGP_A_ROL;");
-//    res.json(result);
-//  } catch (error) {
-//    res.status(500).json({ message: error.message });
-//  }
-//};
-
-
-
-
-
+//metodo que valida un usuario en la base de datos 
 export const login = async (req, res) => {
   try {
     const { usuario, password } = req.body;
     
 
-    //validar que vengan datos
+    //validar que los campos no vienen vacios 
     if(!usuario || !password){
       return res.status(400).json({
         message : "usuario y contraseña requeridos"
@@ -46,31 +20,30 @@ export const login = async (req, res) => {
       [usuario]
     );
 
-    // Verificar si existe
+    // Verifica si existe el usuario en la base de datos
     if (rows.length === 0) {
       return res.status(404).json({ message: "Usuario no existe" });
     }
 
         const user = rows[0];
 
-    //Validar contraseña (PLANO - solo para pruebas)
+    //Validar contraseña (solo pruebas por el momento, ya que no se encriptan)
     if (user.TC_USU_PASSWORD !== password) {
       return res.status(401).json({
-         message: "Contraseña incorrecta",
-        pass : password
+
+        message: "Contraseña incorrecta",
         
         });
     }
-
-        // 5. Login exitoso
+        //login exitoso, regresa un token para el acceso de el usuario
+      
     res.json({
       message: "Login exitoso",
-      user: user.TC_USU_NOMBRE
+      user: user.TC_USU_NOMBRE,
+
+      //llama la funcion que genera los token y los devuelve para que lo guarde el usuario
+      token: generarToken(user)
     });
-
-
-
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
