@@ -1,6 +1,4 @@
-
 import { pool } from "../database/db.js";
-
 import bcrypt from "bcryptjs";
 import { crearToken } from "../libs/jwt.js";
 import {
@@ -8,8 +6,7 @@ import {
   crearUsuario,
 } from "../models/usuario.model.js";
 
-//metodo que valida un usuario en la base de datos 
-
+//metodo que valida un usuario en la base de datos
 
 export const login = async (req, res) => {
   try {
@@ -18,34 +15,31 @@ export const login = async (req, res) => {
     // Validar campos
     if (!correo || !password) {
       return res.status(400).json({
-        message: "Correo y contraseña requeridos"
+        message: "Correo y contraseña requeridos",
       });
     }
 
     // Buscar usuario por correo
     const [rows] = await pool.query(
       "SELECT * FROM TBSGP_A_USUARIO WHERE TC_USU_CORREO = ?",
-      [correo]
+      [correo],
     );
 
     // Verificar si existe
     if (rows.length === 0) {
       return res.status(404).json({
-        message: "Usuario no existe"
+        message: "Usuario no existe",
       });
     }
 
     const user = rows[0];
 
     //Comparar contraseña encriptada
-    const passwordValida = await bcrypt.compare(
-      password,
-      user.TC_USU_PASSWORD
-    );
+    const passwordValida = await bcrypt.compare(password, user.TC_USU_PASSWORD);
 
     if (!passwordValida) {
       return res.status(401).json({
-        message: "Contraseña incorrecta"
+        message: "Contraseña incorrecta",
       });
     }
 
@@ -53,17 +47,14 @@ export const login = async (req, res) => {
     res.json({
       message: "Login exitoso",
       user: user.TC_USU_NOMBRE,
-      token: crearToken(user)
+      token: crearToken(user),
     });
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-
-
-//registrar usuario en la db 
+//registrar usuario en la db
 
 export const register = async (req, res) => {
   const {
@@ -124,4 +115,3 @@ export const register = async (req, res) => {
     token,
   });
 };
-
