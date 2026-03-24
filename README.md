@@ -173,3 +173,5 @@ git commit -m "style: formatear archivos del módulo de permisos"
 - ❌ Evitar commits genéricos como `git commit -m "cambios"`
 - ✅ Describir claramente qué se hizo
 - ✅ Un commit por cada cambio importante
+
+Copyright 2026
