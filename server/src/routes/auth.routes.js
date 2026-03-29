@@ -6,6 +6,6 @@ const router = Router();
 router.post("/register", register);
 
 //ruta que sirve para validar el login
-router.get("/login", login);
+router.post("/login", login);
 
 export default router;

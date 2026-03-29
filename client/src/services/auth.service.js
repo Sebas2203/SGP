@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000';
+const API_URL = 'http://localhost:4000/api';
 
 // ─── Decodifica el token JWT sin librería externa ─────────────────────────────
 // El token tiene 3 partes: header.payload.firma

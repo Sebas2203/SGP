@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors"
 import authRoutes from "./routes/auth.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 
@@ -7,6 +8,9 @@ import indexRoutes from "./routes/index.routes.js";
 //import protegidaRoutes from "./routes/protegida.routes.js";
 
 const app = express();
+
+
+app.use(cors())
 
 //middleware
 app.use(morgan("dev"));
