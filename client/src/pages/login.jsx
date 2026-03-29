@@ -1,35 +1,67 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/auth.service";
 
 function Login() {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ correo: "", password: "" });
+  const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("JSON login:", form);
+    setCargando(true);
+
+    const data = {
+      correo: form.correo,
+      password: form.password,
+    };
+
+    try {
+      const result = await loginUser(data);
+
+      // Guarda el token y nombre en localStorage
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("usuario", result.nombre);
+      localStorage.setItem("rolId", result.rolId);
+
+      // Redirige según rol:
+      // rolId 1 = Administrador (RRHH) → home-rrhh
+      // rolId 2 = Empleado             → home-empleado
+      if (result.rolId === 1) {
+        navigate("/homerrhh");
+      } else {
+        navigate("/homeempleado");
+      }
+
+    } catch (error) {
+      console.error(error.message);
+      setError(error.message);
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
     <div className="d-flex justify-content-center mt-5">
       <div className="card-custom p-4 w-50">
         <form onSubmit={handleSubmit}>
+
           <div className="mb-3">
             <label>Email</label>
             <input
               type="email"
-              name="email"
+              name="correo"
               className="form-control"
               placeholder="JuanPerez@vivit.co.cr"
+              value={form.correo}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -39,17 +71,30 @@ function Login() {
               type="password"
               name="password"
               className="form-control"
+              value={form.password}
               onChange={handleChange}
+              required
             />
           </div>
 
-          <button className="btn btn-dark-custom w-100">
-            Iniciar Sesión
+          {error && (
+            <div className="alert alert-danger py-2" style={{ fontSize: "0.85rem" }}>
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="btn btn-dark-custom w-100"
+            disabled={cargando}
+          >
+            {cargando ? "Iniciando sesión..." : "Iniciar Sesión"}
           </button>
 
           <div className="mt-3">
             <a href="/recuperacion">¿Olvidó su contraseña?</a>
           </div>
+
         </form>
       </div>
     </div>
