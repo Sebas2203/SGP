@@ -47,6 +47,7 @@ DB_USER=tu_usuario
 DB_PASSWORD=tu_contraseña
 DB_NAME=nombre_base_de_datos
 PORT=3000
+JWT_SECRET=secret
 ```
 
 ### 4. Iniciar el proyecto
