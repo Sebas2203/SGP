@@ -35,7 +35,10 @@ function App() {
           {/* Rutas de RRHH */}
           <Route path="/homerrhh" element={<HomeRRHH />} />
           <Route path="/registrovacaciones" element={<RegistroVacaciones />} />
-          <Route path="/registroincapacidades" element={<RegistroIncapacidades />} />
+          <Route
+            path="/registroincapacidades"
+            element={<RegistroIncapacidades />}
+          />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />

@@ -1,13 +1,13 @@
-const API_URL = 'http://localhost:4000/api';
+const API_URL = "http://localhost:4000/api";
 
 // ─── Decodifica el token JWT sin librería externa ─────────────────────────────
 // El token tiene 3 partes: header.payload.firma
 // El payload del medio contiene los datos del usuario en base64
 export function decodificarToken(token) {
   try {
-    const payload = token.split('.')[1];   // toma la parte del medio
-    const decodificado = atob(payload);    // base64 → texto
-    return JSON.parse(decodificado);       // texto → objeto JS
+    const payload = token.split(".")[1]; // toma la parte del medio
+    const decodificado = atob(payload); // base64 → texto
+    return JSON.parse(decodificado); // texto → objeto JS
   } catch (e) {
     return null;
   }
@@ -16,8 +16,8 @@ export function decodificarToken(token) {
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 export async function loginUser(data) {
   const response = await fetch(`${API_URL}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
     // data = { correo: "...", password: "..." }
   });
@@ -25,7 +25,7 @@ export async function loginUser(data) {
   const result = await response.json();
 
   if (!response.ok) {
-    throw new Error(result.message || 'Error al iniciar sesión');
+    throw new Error(result.message || "Error al iniciar sesión");
   }
 
   // Decodifica el token para leer el rol sin llamar al back de nuevo
@@ -43,8 +43,8 @@ export async function loginUser(data) {
 // ─── REGISTER ─────────────────────────────────────────────────────────────────
 export async function registerUser(data) {
   const response = await fetch(`${API_URL}/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
     // data = { nombre, apellidos, identificacion,
     //          correo, password, fechaNacimiento, depId }
@@ -53,7 +53,7 @@ export async function registerUser(data) {
   const result = await response.json();
 
   if (!response.ok) {
-    throw new Error(result.message || 'Error al registrar usuario');
+    throw new Error(result.message || "Error al registrar usuario");
   }
 
   // El register siempre asigna TN_ROL_ID = 2 (Empleado)
