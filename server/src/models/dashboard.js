@@ -26,7 +26,7 @@ export const solicitudesPorDepartamento = async () => {
   const [rows] = await pool.query(
     `SELECT 
 D.TC_DEP_NOMBRE,
-COUNT(*) AS TOTAL
+COUNT(*) AS CANTIDAD
 FROM TBSGP_H_SOLICITUD_PERMISO S
 JOIN TBSGP_A_USUARIO U 
 ON S.TN_USU_ID = U.TN_USU_ID
@@ -42,7 +42,7 @@ export const solicitudesPorMes = async () => {
   const [rows] = await pool.query(
     `SELECT 
 MONTH(TF_SOL_FECHA_INICIO) AS MES,
-COUNT(*) AS TOTAL
+COUNT(*) AS CANTIDAD
 FROM TBSGP_H_SOLICITUD_PERMISO
 GROUP BY MONTH(TF_SOL_FECHA_INICIO)`
   );
@@ -54,7 +54,7 @@ export const usuariosPorDepartamento = async () => {
   const [rows] = await pool.query(
     `SELECT 
 D.TC_DEP_NOMBRE,
-COUNT(*) AS TOTAL
+COUNT(*) AS CANTIDAD
 FROM TBSGP_A_USUARIO U
 JOIN TBSGP_A_DEPARTAMENTO D 
 ON U.TN_DEP_ID = D.TN_DEP_ID
