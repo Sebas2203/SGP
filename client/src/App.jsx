@@ -14,6 +14,7 @@ import Incapacidades from "./pages/Incapacidades";
 import RegistroIncapacidades from "./pages/RegistroIncapacidades";
 
 import Navbar from "./components/navbar";
+import HomeDashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
 
           {/* Rutas de RRHH */}
           <Route path="/homerrhh" element={<HomeRRHH />} />
+          <Route path="/dashboard" element={<HomeDashboard />} />
           <Route path="/registrovacaciones" element={<RegistroVacaciones />} />
           <Route
             path="/registroincapacidades"
