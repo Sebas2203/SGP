@@ -5,6 +5,8 @@ import authRoutes from "./routes/auth.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 import leave from "./routes/leave.routes.js";
 import RRHH from "./routes/RRHH.routes.js"
+import dashboard from "./routes/dashboard.routes.js"
+
 //ruta de prueba
 //import protegidaRoutes from "./routes/protegida.routes.js";
 
@@ -19,6 +21,10 @@ app.use(cors());
 app.use("/api", indexRoutes);
 app.use("/api", authRoutes);
 app.use("/api", leave);
+app.use("/api", dashboard);
+
+
+
 
 
 app.use("/api", RRHH);
