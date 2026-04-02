@@ -4,6 +4,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 import leave from "./routes/leave.routes.js";
+import RRHH from "./routes/RRHH.routes.js"
 import dashboard from "./routes/dashboard.routes.js"
 
 //ruta de prueba
@@ -25,6 +26,8 @@ app.use("/api", dashboard);
 
 
 
+
+app.use("/api", RRHH);
 //esta ruta la use de pruebas para los tokens
 //app.use("/api", protegidaRoutes);
 
