@@ -6,14 +6,13 @@ import Register from "./pages/register";
 import Recuperacion from "./pages/recuperacion";
 import NotFound from "./pages/notfound";
 import Reset from "./pages/reset";
-
-// Pantallas nuevas
 import HomeEmpleado from "./pages/homeEmpleado";
 import HomeRRHH from "./pages/homeRRHH";
 import Vacaciones from "./pages/vacaciones";
 import RegistroVacaciones from "./pages/registroVacaciones";
 import Incapacidades from "./pages/Incapacidades";
 import RegistroIncapacidades from "./pages/registroIncapacidades";
+import HomeDashboard from "./pages/Dashboard";
 
 import Navbar from "./components/navbar";
 
@@ -34,14 +33,15 @@ function App() {
           <Route path="/reset" element={<Reset />} />
 
           {/* Rutas de empleado */}
-          <Route path="/home-empleado" element={<HomeEmpleado />} />
+          <Route path="/homeempleado" element={<HomeEmpleado />} />
           <Route path="/vacaciones" element={<Vacaciones />} />
           <Route path="/incapacidades" element={<Incapacidades />} />
 
           {/* Rutas de RRHH */}
-          <Route path="/home-rrhh" element={<HomeRRHH />} />
-          <Route path="/registro-vacaciones" element={<RegistroVacaciones />} />
-          <Route path="/registro-incapacidades" element={<RegistroIncapacidades />} />
+          <Route path="/homerrhh" element={<HomeRRHH />} />
+          <Route path="/registrovacaciones" element={<RegistroVacaciones />} />
+          <Route path="/registroincapacidades" element={<RegistroIncapacidades />} />
+          <Route path="/dashboard" element={<HomeDashboard />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />

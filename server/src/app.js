@@ -18,6 +18,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
+// Configuración para servir archivos estáticos desde la carpeta "uploads"
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use("/uploads", express.static(join(__dirname, "../uploads")));
+
 //routes
 app.use("/api", indexRoutes);
 app.use("/api", authRoutes);

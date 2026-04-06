@@ -1,3 +1,4 @@
+// client/src/pages/register.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../services/auth.service";
@@ -57,10 +58,9 @@ function Register() {
     };
 
     try {
-      const result = await registerUser(payload);
-      localStorage.setItem("token", result.token);
-      // El register siempre crea Empleados → redirige a homeempleado
-      navigate("/homeempleado");
+      await registerUser(payload);
+      // Redirige al login para que el usuario inicie sesión con sus credenciales
+      navigate("/login");
     } catch (error) {
       console.error(error.message);
       setError(error.message);
@@ -127,7 +127,7 @@ function Register() {
           </div>
 
           <div className="mb-3">
-            <label>Fecha de Nacimiento</label>
+            <label>Fecha de nacimiento</label>
             <input
               type="date"
               name="fechaNacimiento"
@@ -138,7 +138,7 @@ function Register() {
             />
           </div>
 
-          {/* Select con los departamentos de la DB — */}
+          {/* Select con los departamentos de la DB — ya no es un input numérico */}
           <div className="mb-3">
             <label>Departamento</label>
             <select
@@ -170,7 +170,7 @@ function Register() {
           </div>
 
           <div className="mb-3">
-            <label>Confirmar Contraseña</label>
+            <label>Confirmar contraseña</label>
             <input
               type="password"
               name="confirmPassword"

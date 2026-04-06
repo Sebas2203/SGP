@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 function HomeEmpleado() {
   const navigate = useNavigate();
 
-  // Datos del usuario (luego vendrán del backend / contexto)
+  // Datos del usuario 
   const usuario = {
-    nombre: "Usuario Empleado",
+    nombre: "usuario empleado",
     avatar: null,
   };
 
@@ -28,16 +28,16 @@ function HomeEmpleado() {
           <div className="col-md-6">
             <div className="card h-100 p-3 shadow-sm">
               <div className="card-body">
-                <h5 className="card-title">Vacaciones Acumuladas</h5>
+                <h5 className="card-title">Vacaciones</h5>
                 <p className="card-text text-muted" style={{ fontSize: "0.9rem" }}>
-                  Aquí puedes ver las fechas en las que el área de
-                  vacaciones ha aceptado o rechazado tus solicitudes.
+                  Aquí puedes solicitar tus vacaciones y revisar el estado de tus solicitudes anteriores. 
+                  Recuerda que las vacaciones deben ser aprobadas por tu supervisor.
                 </p>
                 <button
                   className="btn btn-dark-custom mt-2"
                   onClick={() => navigate("/vacaciones")}
                 >
-                  Solicitar Vacaciones
+                  Solicitar vacaciones
                 </button>
               </div>
             </div>
@@ -56,7 +56,7 @@ function HomeEmpleado() {
                   className="btn btn-dark-custom mt-2"
                   onClick={() => navigate("/incapacidades")}
                 >
-                  Subir Incapacidad
+                  Subir incapacidad
                 </button>
               </div>
             </div>

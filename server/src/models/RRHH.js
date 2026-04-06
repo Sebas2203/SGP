@@ -1,10 +1,9 @@
 import { pool } from "../database/db.js";
-
 //metodos que se conectan a la base de datos para las consultas y cambios que puede hacer un RRHH
 //se creo una clase para faciliatr el uso en otros archivos
 
 export class RRHH_METODOS {
-  //metodo que muestra todas las solicitudes pendientes
+  // Muestra todas las solicitudes pendientes — ahora incluye TC_ARCHIVO_URL
   static async SolicitudesPendientes() {
     const [result] = await pool.query(
       `SELECT 
@@ -12,6 +11,7 @@ export class RRHH_METODOS {
     SP.TC_SOL_MOTIVO,
     SP.TF_SOL_FECHA_INICIO,
     SP.TF_SOL_FECHA_FIN,
+    SP.TC_ARCHIVO_URL,
     ES.TC_EST_NOMBRE        AS ESTADO,
     U.TN_USU_ID,
     U.TC_USU_NOMBRE,

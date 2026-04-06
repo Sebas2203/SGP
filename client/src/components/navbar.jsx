@@ -1,9 +1,16 @@
+// client/src/components/navbar.jsx
 import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
     <nav className="navbar-custom d-flex justify-content-between align-items-center p-3">
-      <h3 className="fw-bold" style={{ color: "var(--primary)" }}>Vivit</h3>
+
+      {/* Logo clickeable — lleva al inicio */}
+      <Link to="/Inicio" style={{ textDecoration: "none" }}>
+        <h3 className="fw-bold mb-0" style={{ color: "var(--primary)", cursor: "pointer" }}>
+          Vivit
+        </h3>
+      </Link>
 
       <div>
         <button className="btn btn-light me-2">ES</button>
@@ -16,7 +23,7 @@ function Navbar() {
 
         <Link to="/login">
           <button className="btn btn-dark-custom">
-            Iniciar Sesión
+            Iniciar sesión
           </button>
         </Link>
       </div>

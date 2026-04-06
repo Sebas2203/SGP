@@ -1,9 +1,4 @@
 // client/src/services/incapacidades.service.js
-//
-// Usa los mismos endpoints que vacaciones pero:
-//   - POST /api/addMedicalLeave en lugar de /addVacations
-//   - reason: "Incapacidad" en lugar de "Vacaciones"
-// El resto de los campos es idéntico
 
 const API_URL = 'http://localhost:4000/api';
 
@@ -11,7 +6,6 @@ function getToken() {
   return localStorage.getItem('token');
 }
 
-// Obtiene el userId del token JWT — mismo helper que en vacaciones.service.js
 function getUserIdFromToken() {
   const token = getToken();
   if (!token) return null;
@@ -23,41 +17,43 @@ function getUserIdFromToken() {
   }
 }
 
-// ─── SOLICITAR INCAPACIDAD (Empleado) ────────────────────────────────────────
+// ─── SOLICITAR INCAPACIDAD CON ARCHIVO ───────────────────────────────────────
 // Endpoint: POST /api/addMedicalLeave
 //
-// Campos que espera el backend (mismo leave.controller.js):
-//   status    → siempre 1 (Pendiente)
-//   userId    → TN_USU_ID del token
-//   reason    → "Incapacidad" (fijo para esta pantalla)
-//   startDate → fecha de inicio
-//   endDate   → fecha de fin
+// Usa FormData porque necesita enviar el archivo junto con los datos.
+// multer en el back recibe el archivo en el campo "archivo"
+// y los demás campos en req.body.
 //
-// NOTA: El backend actual no maneja archivos adjuntos todavía.
-// Cuando el back implemente la subida de archivos, se cambiará a FormData.
-// Por ahora mandamos solo el JSON con los campos de texto.
-export async function solicitarIncapacidad(startDate, endDate) {
+// IMPORTANTE: No ponemos Content-Type en los headers —
+// el navegador lo asigna automáticamente con el boundary correcto
+// cuando el body es FormData.
+export async function solicitarIncapacidad(startDate, endDate, archivo) {
   const userId = getUserIdFromToken();
 
   if (!userId) {
     throw new Error('No hay sesión activa. Por favor iniciá sesión.');
   }
 
-  const body = {
-    status: 1,
-    userId,
-    reason: "Incapacidad", // fijo — diferencia esta solicitud de una de vacaciones
-    startDate,
-    endDate,
-  };
+  // Construimos el FormData con todos los campos
+  const formData = new FormData();
+  formData.append('status', 1);           // siempre Pendiente
+  formData.append('userId', userId);       // del token JWT
+  formData.append('reason', 'Incapacidad'); // fijo
+  formData.append('startDate', startDate);
+  formData.append('endDate', endDate);
+
+  // Solo adjuntamos el archivo si fue seleccionado
+  if (archivo) {
+    formData.append('archivo', archivo);  // debe llamarse "archivo" — igual que en multer
+  }
 
   const response = await fetch(`${API_URL}/addMedicalLeave`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      // NO incluir Content-Type aquí — FormData lo maneja automáticamente
       'Authorization': `Bearer ${getToken()}`,
     },
-    body: JSON.stringify(body),
+    body: formData,
   });
 
   const result = await response.json();
@@ -67,13 +63,10 @@ export async function solicitarIncapacidad(startDate, endDate) {
   }
 
   return result;
-  // Devuelve: { message: "Permiso médico solicitado exitosamente", id: X }
+  // Devuelve: { message: "Permiso médico solicitado exitosamente", id: X, archivoUrl: "/uploads/..." }
 }
 
-// ─── OBTENER SOLICITUDES (RRHH) ───────────────────────────────────────────────
-// Reutiliza el mismo endpoint GET /api/getSolicitudes que vacaciones
-// El backend devuelve todas las solicitudes sin importar si son vacaciones o incapacidades
-// Se pueden filtrar por reason === "Incapacidad" en el front si es necesario
+// ─── OBTENER INCAPACIDADES (RRHH) ─────────────────────────────────────────────
 export async function getIncapacidades() {
   const response = await fetch(`${API_URL}/getSolicitudes`, {
     method: 'GET',
@@ -89,13 +82,10 @@ export async function getIncapacidades() {
     throw new Error(result.message || 'Error al obtener incapacidades');
   }
 
-  // Filtramos solo las que tienen reason === "Incapacidad"
-  return result.data.filter(s => s.TC_SOL_MOTIVO === "Incapacidad");
+  return result.data.filter(s => s.TC_SOL_MOTIVO === 'Incapacidad');
 }
 
-// ─── ACEPTAR O RECHAZAR INCAPACIDAD (RRHH) ───────────────────────────────────
-// Usa el mismo endpoint PUT /api/putEstado que vacaciones
-// nuevoEstadoId: 2 = Aprobado, 3 = Rechazado
+// ─── ACTUALIZAR ESTADO (RRHH) ─────────────────────────────────────────────────
 export async function actualizarEstadoIncapacidad(solicitudId, nuevoEstadoId) {
   const response = await fetch(`${API_URL}/putEstado`, {
     method: 'PUT',
