@@ -29,6 +29,7 @@ function Login() {
       localStorage.setItem("token", result.token);
       localStorage.setItem("usuario", result.nombre);
       localStorage.setItem("rolId", result.rolId);
+      localStorage.setItem("birthdate", result.birthdate);
 
       // Redirige según rol:
       // rolId 1 = Administrador (RRHH) → home-rrhh
@@ -37,6 +38,7 @@ function Login() {
         navigate("/homerrhh");
       } else {
         navigate("/homeempleado");
+        console.log(result)
       }
 
     } catch (error) {

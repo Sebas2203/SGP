@@ -38,6 +38,7 @@ export async function loginUser(data) {
   return {
     token: result.token,
     nombre: result.user,
+    birthdate: result.birthdate,
     rolId: datosToken?.TN_ROL_ID ?? null,
     // TN_ROL_ID: 1 = Administrador (RRHH)
     // TN_ROL_ID: 2 = Empleado

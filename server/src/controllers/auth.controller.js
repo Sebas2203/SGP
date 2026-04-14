@@ -7,7 +7,6 @@ import {
 } from "../models/usuario.model.js";
 
 //metodo que valida un usuario en la base de datos
-
 export const login = async (req, res) => {
   try {
     const { correo, password } = req.body;
@@ -47,6 +46,7 @@ export const login = async (req, res) => {
     res.json({
       message: "Login exitoso",
       user: user.TC_USU_NOMBRE,
+      birthdate: user.TF_USU_FECHA_NACIMIENTO,
       token: crearToken(user),
     });
   } catch (error) {

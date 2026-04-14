@@ -1,7 +1,19 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import  {checkBirthdayNotification}  from "../js/birthday";
+
+
+
 
 function HomeEmpleado() {
   const navigate = useNavigate();
+
+    useEffect(() => {
+    const birthdate = localStorage.getItem('birthdate');
+    if (birthdate) {
+      checkBirthdayNotification(birthdate);
+    }
+  }, []);
 
   // Datos del usuario 
   const usuario = {

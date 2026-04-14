@@ -1,7 +1,18 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import  {checkBirthdayNotification}  from "../js/birthday";
 
 function HomeRRHH() {
   const navigate = useNavigate();
+
+
+      useEffect(() => {
+      const birthdate = localStorage.getItem('birthdate');
+      if (birthdate) {
+        checkBirthdayNotification(birthdate);
+      }
+    }, []);
+  
 
   return (
     <div className="d-flex justify-content-center mt-5">
