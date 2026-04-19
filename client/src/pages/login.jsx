@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth.service";
+import { useAuth } from "../context/AuthContext"; // ← nuevo
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // ← nuevo
   const [form, setForm] = useState({ correo: "", password: "" });
   const [error, setError] = useState("");
   const [cargando, setCargando] = useState(false);
@@ -17,28 +19,15 @@ function Login() {
     e.preventDefault();
     setCargando(true);
 
-    const data = {
-      correo: form.correo,
-      password: form.password,
-    };
-
     try {
-      const result = await loginUser(data);
+      const result = await loginUser({ correo: form.correo, password: form.password });
 
-      // Guarda el token y nombre en localStorage
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("usuario", result.nombre);
-      localStorage.setItem("rolId", result.rolId);
-      localStorage.setItem("birthdate", result.birthdate);
+      login(result); // ← reemplaza los 4 localStorage.setItem
 
-      // Redirige según rol:
-      // rolId 1 = Administrador (RRHH) → home-rrhh
-      // rolId 2 = Empleado             → home-empleado
       if (result.rolId === 1) {
         navigate("/homerrhh");
       } else {
         navigate("/homeempleado");
-        console.log(result)
       }
 
     } catch (error) {
