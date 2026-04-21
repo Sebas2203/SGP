@@ -79,7 +79,7 @@ function Login() {
             className="btn btn-dark-custom w-100"
             disabled={cargando}
           >
-            {cargando ? "Iniciando sesión..." : "Iniciar Sesión"}
+            {cargando ? "Iniciando sesión..." : "Iniciar sesión"}
           </button>
 
           <div className="mt-3">

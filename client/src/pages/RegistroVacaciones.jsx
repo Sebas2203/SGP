@@ -65,7 +65,7 @@ function RegistroVacaciones() {
     <div className="container mt-4">
       <div className="row g-4">
         <div className="col-md-3">
-          <h4 className="fw-bold">Registro de<br />Vacaciones</h4>
+          <h4 className="fw-bold">Registro de<br />vacaciones</h4>
           <p className="text-muted" style={{ fontSize: "0.85rem" }}>
             Empleados que han solicitado Vacaciones
           </p>

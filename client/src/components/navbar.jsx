@@ -50,7 +50,7 @@ function Navbar() {
               onClick={handleLogout}
               style={{ color: "#FF8A8A" }}
             >
-              Cerrar Sesión
+              Cerrar sesión
             </button>
           </>
         ) : (
@@ -63,7 +63,7 @@ function Navbar() {
             </Link>
             <Link to="/login">
               <button className="btn btn-dark-custom">
-                Iniciar Sesión
+                Iniciar sesión
               </button>
             </Link>
           </>

@@ -161,7 +161,7 @@ function Vacaciones() {
             {error && <div className="alert alert-danger mb-3">{error}</div>}
 
             <button type="submit" className="btn btn-dark-custom" disabled={cargando}>
-              {cargando ? "Enviando solicitud..." : "Solicitar días de Vacaciones"}
+              {cargando ? "Enviando solicitud..." : "Solicitar días de vacaciones"}
             </button>
              
           </form>
